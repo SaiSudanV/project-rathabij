@@ -1,6 +1,6 @@
-# Project Rathabi-Orochi
+# Project Rathabij
 
-An experimental, endlessly evolving Game AI built using Liquid Neural Networks (LNN) and Reinforcement Learning (PPO), featuring a multi-faceted architecture (Mahoraga core) and an integrated Language Foundation Model (LFM) for real-time, dynamic trashtalking.
+An experimental, endlessly evolving Game AI named after the mythological demon Raktabija—who spawned a clone of himself every time a drop of his blood hit the ground. Built using Liquid Neural Networks (LNN) and Reinforcement Learning (PPO), Rathabij learns from every defeat, adapting dynamically to the player's strategy. It also features an integrated Language Foundation Model (LFM) for real-time, contextual trashtalking.
 
 ## Features
 
