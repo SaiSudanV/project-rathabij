@@ -1,6 +1,6 @@
-# LNN Game AI
+# Project Rathabi-Orochi
 
-An experimental Game AI built using Liquid Neural Networks (LNN) and Reinforcement Learning (PPO), with an integrated Language Foundation Model (LFM) for real-time, dynamic trashtalking.
+An experimental, endlessly evolving Game AI built using Liquid Neural Networks (LNN) and Reinforcement Learning (PPO), featuring a multi-faceted architecture (Mahoraga core) and an integrated Language Foundation Model (LFM) for real-time, dynamic trashtalking.
 
 ## Features
 
