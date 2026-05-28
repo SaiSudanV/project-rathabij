@@ -1,0 +1,84 @@
+debug:
+  enabled: true
+  log_actions: true
+  log_confidence_threshold: 0.3
+  log_emotions: true
+  log_profiler: true
+difficulty:
+  adjustment_speed: 0.05
+  enabled: true
+  reaction_delay_max_ms: 300
+  reaction_delay_min_ms: 50
+  target_winrate: 0.5
+emotion:
+  cocky_threshold: 3
+  confident_threshold: 1
+  desperate_hp_pct: 0.15
+  mood_decay_seconds: 30
+  tilt_threshold: -3
+  voice_pitch_cocky: 0.9
+  voice_pitch_tilted: 1.15
+  voice_speed_cocky: 0.85
+  voice_speed_tilted: 1.2
+language:
+  backend: lfm2
+  max_tokens: 60
+  model_name: LiquidAI/LFM2-700M-GGUF
+  quantization: Q4_K_M
+  system_prompt: You are a skilled, adult competitive gamer. Be witty, confident,
+    and savage. No emojis. No caps spam. Sound like a pro.
+  temperature: 0.8
+memory:
+  persistent: true
+  save_dir: checkpoints/session_memory
+  save_interval_seconds: 60
+model:
+  dropout: 0.1
+  hidden_size: 896
+  num_action_slots: 40
+  num_cfc_layers: 4
+  state_dim: 64
+network:
+  godot_port: 9878
+  host: 127.0.0.1
+  port: 9877
+  protocol: udp
+personality:
+  preset: cold_calculated
+player_profiler:
+  exploit_confidence: 0.7
+  min_samples: 5
+  window_seconds: 60
+training:
+  batch_size: 64
+  gae_lambda: 0.95
+  gamma: 0.99
+  nlp_batch_size: 32
+  nlp_epochs: 5
+  nlp_lr: 0.0001
+  num_envs: 8
+  ppo_clip: 0.2
+  ppo_epochs: 10
+  ppo_lr: 0.0003
+  reward_combo_discovery: 0.5
+  reward_damage_dealt: 0.1
+  reward_damage_taken: -0.05
+  reward_death: -1.0
+  reward_kill: 1.0
+  total_timesteps: 50000
+voice:
+  sample_rate: 16000
+  stt_model: moonshine-tiny
+  tts_speed: 1.0
+  tts_voice: af_heart
+yapping:
+  enabled: true
+  global_cooldown_seconds: 15
+  prob_on_combo_landed: 0.8
+  prob_on_death: 0.7
+  prob_on_kill: 0.9
+  prob_on_low_hp_survive: 0.6
+  prob_on_match_end: 1.0
+  prob_on_match_start: 1.0
+  prob_on_player_miss: 0.1
+  prob_on_player_returns: 1.0

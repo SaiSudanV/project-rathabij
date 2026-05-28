@@ -1,0 +1,26 @@
+# === Core LNN ===
+torch>=2.1.0
+ncps>=0.0.7
+numpy>=1.24.0
+
+# === Reinforcement Learning ===
+gymnasium>=0.29.0
+numba>=0.58.0
+
+# === NLP & Datasets ===
+datasets>=2.14.0
+tokenizers>=0.15.0
+transformers>=4.36.0
+
+# === Voice Pipeline ===
+# moonshine-stt (install separately via pip install useful-moonshine)
+# kokoro (install separately via pip install kokoro)
+sounddevice>=0.4.6
+
+# === Networking ===
+# (stdlib: socket, asyncio — no extra deps)
+
+# === Developer Tools ===
+pyyaml>=6.0
+rich>=13.0.0
+pygame>=2.5.0

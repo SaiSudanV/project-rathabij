@@ -1,0 +1,142 @@
+# ============================================================
+# LNN Game AI — Master Configuration (v2 Rebuild)
+# ============================================================
+# Compact architecture with Categorical action space.
+# All tunable parameters in one place.
+# ============================================================
+
+model:
+  state_dim: 32                  # Dense 32-float observation vector
+  hidden_size: 128               # Compact hidden (was 1280)
+  num_actions: 12                # Categorical discrete actions (was 40 Bernoulli)
+  num_cfc_layers: 2              # 2 liquid layers (was 4)
+  dropout: 0.05
+
+language:
+  backend: "lfm2"
+  model_name: "LiquidAI/LFM2-700M-GGUF"
+  quantization: "Q4_K_M"
+  max_tokens: 60
+  temperature: 0.8
+  system_prompt: "You are a skilled, adult competitive gamer. Be witty, confident, and savage. No emojis. No caps spam. Sound like a pro."
+
+training:
+  # --- PPO (Combat) ---
+  ppo_lr: 3.0e-4
+  rollout_length: 2048
+  ppo_epochs: 4
+  ppo_clip: 0.2
+  gamma: 0.99
+  gae_lambda: 0.95
+  batch_size: 512
+  num_envs: 12
+  total_timesteps: 10_000_000
+  frame_skip: 4                  # Brain decides every 4 physics frames
+
+  # --- Curriculum Phases ---
+  # Phase 1 (0-2M): Navigation — reach random coords
+  # Phase 2 (2M-5M): Tracking — find & follow opponent
+  # Phase 3 (5M-10M): Combat — full kill optimization
+  curriculum_phase_2_step: 2_000_000
+  curriculum_phase_3_step: 5_000_000
+
+  # --- Reward Shaping (Cold & Calculated Predator) ---
+  # POSITIVE (in decreasing priority)
+  reward_flawless_win: 25.0      # Max reward — flawless victory
+  reward_kill: 15.0              # Highest priority — KILL the opponent
+  reward_counter: 1.0            # Block-then-attack counter (more than normal hit)
+  reward_attack_hit: 0.5         # Normal attack landed
+  reward_approach: 0.01          # Getting closer to opponent (per frame)
+  reward_find_after_lost: 2.0    # Finding opponent after losing line of sight
+
+  # NEGATIVE (penalty system — every button costs)
+  penalty_button_press: -0.02    # EVERY action has a cost — forces cold calculation
+  penalty_spam: -0.15            # Spam guard: pressing attack during cooldown
+  penalty_block: -0.005          # Holding block/shield (per frame)
+  penalty_evade: -0.01           # Dash/evade cost
+  penalty_no_attack_landed: -3.0 # End of match: no attacks landed at all
+  penalty_running_away: -0.03    # Moving away from opponent (per frame)
+  penalty_stationary: -0.02      # Standing still in range without acting (per frame)
+  penalty_not_killed: -5.0       # Match timeout without killing opponent
+  penalty_death: -5.0            # Got killed
+  penalty_low_stamina: -0.01     # Stamina below 20% (per frame)
+  penalty_damage_taken: -0.05    # Per point of damage taken
+  penalty_whiff: -0.04           # Missed attack
+
+  # Stamina system
+  stamina_melee: 10.0
+  stamina_ki_blast: 8.0
+  stamina_ranged: 12.0
+  stamina_block: 0.5             # Per frame while blocking
+  stamina_dash: 15.0
+  stamina_regen: 0.4             # Per frame when not acting
+
+  # Match settings
+  match_duration_frames: 3600    # 60 seconds at 60fps
+
+  # --- NLP (Language) ---
+  nlp_lr: 1.0e-4
+  nlp_epochs: 5
+  nlp_batch_size: 32
+
+emotion:
+  tilt_threshold: -3
+  cocky_threshold: 3
+  confident_threshold: 1
+  desperate_hp_pct: 0.15
+  mood_decay_seconds: 30
+  voice_pitch_tilted: 1.15
+  voice_speed_tilted: 1.2
+  voice_pitch_cocky: 0.9
+  voice_speed_cocky: 0.85
+
+yapping:
+  enabled: true
+  global_cooldown_seconds: 15
+  prob_on_kill: 0.9
+  prob_on_death: 0.7
+  prob_on_player_miss: 0.1
+  prob_on_low_hp_survive: 0.6
+  prob_on_combo_landed: 0.8
+  prob_on_match_start: 1.0
+  prob_on_match_end: 1.0
+  prob_on_player_returns: 1.0
+
+difficulty:
+  enabled: true
+  target_winrate: 0.5
+  reaction_delay_min_ms: 50
+  reaction_delay_max_ms: 300
+  adjustment_speed: 0.05
+
+player_profiler:
+  window_seconds: 60
+  min_samples: 5
+  exploit_confidence: 0.7
+
+memory:
+  persistent: true
+  save_dir: "checkpoints/session_memory"
+  save_interval_seconds: 60
+
+network:
+  protocol: "udp"
+  host: "127.0.0.1"
+  port: 9877
+  godot_port: 9878
+
+voice:
+  stt_model: "moonshine-tiny"
+  tts_voice: "af_heart"
+  tts_speed: 1.0
+  sample_rate: 16000
+
+personality:
+  preset: "cold_calculated"
+
+debug:
+  enabled: true
+  log_actions: true
+  log_emotions: true
+  log_profiler: true
+  log_confidence_threshold: 0.3
